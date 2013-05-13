@@ -1,5 +1,5 @@
 # change working directory to directory in the step
 # STAR requires at least 32 GB for mouse,human genomes
-star. cd [% star= %]; [% software.STAR %] --genomeDir [% step0.star_genome_dir %] --readFilesIn [% step0.fastq1 %] [% step0.fastq2 %] --runThreadN 8 --outFilterMatchNminOverLread 0 --outFilterScoreMinOverLread 0 > [% star.star.out %]
+star. cd [% star %]; [% software.STAR %] --genomeDir [% step0.star_genome_dir %] --readFilesIn [% step0.fastq1 %] [% step0.fastq2 %] --runThreadN 8 --outFilterMatchNminOverLread 0 --outFilterScoreMinOverLread 0 > [% star.star.out %]
 star.mem 64000 
 star.output Aligned.out.sam Log.final.out Log.out Log.progress.out dir1/SJ.out.tab 
