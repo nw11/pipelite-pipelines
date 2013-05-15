@@ -1,0 +1,1 @@
+homerMakeTagDir. [% software.makeTagDir %] [% homerMakeTagDir.dir1 %] [% step0.sam %] -checkGC -fragLength 150 -genome mm10 -format sam
