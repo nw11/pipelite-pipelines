@@ -1,0 +1,11 @@
+cds. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count cds -d [% homerMakeTagDir %]  > [% cds.cds.txt %] 2>[% cds.err %]
+exons. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count exons   -d [% homerMakeTagDir %]  > [% exons.exons.txt %] 2>[% exons.err %]
+homerMakeTagDir. [% software.makeTagDir %] [% homerMakeTagDir %] [% star.output1 %] -checkGC -fragLength 150 -genome mm10 -format sam 2>[% homerMakeTagDir.err %]
+introns. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count introns -d [% homerMakeTagDir %]  > [% introns.introns.txt %] 2>[% introns.err %]
+repeats. perl [% software.analyzeRNA.pl %] repeats mm10  -rpkm -strand both -d  [% homerMakeTagDir %] > [% repeats.repeats.txt %] 2>[% repeats.err %]
+repeats.mem 32000
+star. cd [% star %]; [% software.STAR %] --genomeDir [% step0.star_genome_dir %] --readFilesIn [% step0.fastq1 %] [% step0.fastq2 %] --runThreadN 8 --outFilterMatchNminOverLread 0 --outFilterScoreMinOverLread 0 > [% star.star.out %] 2>[% star.err %]
+star.mem 64000
+star.output Aligned.out.sam Log.final.out Log.out Log.progress.out SJ.out.tab
+utr3. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 3utr -d [% homerMakeTagDir %]  > [% utr3.3utr.txt %] 2>[% utr3.err %]
+utr5. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 5utr -d [% homerMakeTagDir %]  > [% utr5.5utr.txt %] 2>[% utr5.err %]
