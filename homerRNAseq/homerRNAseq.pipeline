@@ -1,7 +1,7 @@
 exons. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count exons   -d [% step0.tagdir %]  > [% exons.exons.txt %]
 introns. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count introns -d [% step0.tagdir %]  > [% introns.introns.txt %]
-5utr. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 5utr -d [% step0.tagdir %]  > [% 5utr.5utr.txt %]
-3utr. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 3utr -d [% step0.tagdir %]  > [% 3utr.3utr.txt %]
+utr5. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 5utr -d [% step0.tagdir %]  > [% utr5.5utr.txt %]
+utr3. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 3utr -d [% step0.tagdir %]  > [% utr3.3utr.txt %]
 cds. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count cds -d [% step0.tagdir %]  > [% cds.cds.txt %]
 repeats. perl [% software.analyzeRNA.pl %] repeats mm10  -rpkm -strand both -d  [% step0.tagdir %] > [% repeats.repeats.txt %]
 repeats.mem 32000
