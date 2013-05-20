@@ -5,3 +5,10 @@ utr3. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 3utr
 cds. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count cds -d [% step0.tagdir %]  > [% cds.cds.txt %]
 repeats. perl [% software.analyzeRNA.pl %] repeats mm10  -rpkm -strand both -d  [% step0.tagdir %] > [% repeats.repeats.txt %]
 repeats.mem 32000
+exonsrawcount. perl [% software.analyzeRNA.pl %] rna mm10 -noadj -strand both -count exons   -d [% step0.tagdir %]  > [% exonsrawcount.exons.txt %]
+intronsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count introns -d [% step0.tagdir %]  > [% intronsrawcount.introns.txt %]
+utr5rawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count 5utr -d [% step0.tagdir %]  > [% utr5rawcount.5utr.txt %]
+utr3rawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count 3utr -d [% step0.tagdir %]  > [% utr3rawcount.3utr.txt %]
+cdsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count cds -d [% step0.tagdir %]  > [% cdsrawcount.cds.txt %]
+repeatsrawcount. perl [% software.analyzeRNA.pl %] repeats mm10  -noadj -strand both -d  [% step0.tagdir %] > [% repeatsrawcount.repeats.txt %]
+repeatsrawcount.mem 32000
