@@ -28,3 +28,6 @@ exonsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -
 cdsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count cds -d [% homerMakeTagDir %]  > [% cdsrawcount.cds.tsv %]
 repeatsrawcount. perl [% software.analyzeRNA.pl %] repeats mm10  -noadj -strand both -d  [% homerMakeTagDir %] > [% repeatsrawcount.repeats.tsv %]
 repeatsrawcount.mem 32000
+
+#aggregate
+regionsrawcount. paste <(cut -f16 --complement [% exonsrawcount.exons.tsv %] ) <(cut -f16 [% exonsrawcount.exons.tsv %]) <(cut -f16 [% intronsrawcount.introns.tsv %]) <(cut -f16 [% utr3rawcount.3utr.tsv %]) <( cut -f16 [% utr5rawcount.5utr.tsv %] ) <( cut -f16 [% utr5rawcount.5utr.tsv %] ) > [% regionsrawcount.regions.tsv %]
