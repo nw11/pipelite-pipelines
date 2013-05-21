@@ -9,3 +9,12 @@ star.mem 64000
 star.output Aligned.out.sam Log.final.out Log.out Log.progress.out SJ.out.tab
 utr3. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 3utr -d [% homerMakeTagDir %]  > [% utr3.3utr.txt %] 2>[% utr3.err %]
 utr5. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 5utr -d [% homerMakeTagDir %]  > [% utr5.5utr.txt %] 2>[% utr5.err %]
+
+
+utr3rawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count 3utr -d [% homerMakeTagDir %]  > [% utr3rawcount.3utr.txt %] 2>[% utr3rawcount.err %]
+utr5rawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count 5utr -d [% homerMakeTagDir %]  > [% utr5rawcount.5utr.txt %] 2>[% utr5rawcount.err %]
+intronsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count introns -d [% homerMakeTagDir %]  > [% intronsrawcount.introns.txt %] 2>[% intronsrawcount.err %]
+exonsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count exons   -d [% homerMakeTagDir %]  > [% exonsrawcount.exons.txt %] 2>[% exonsrawcount.err %]
+cdsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count cds -d [% homerMakeTagDir %]  > [% cdsrawcount.cds.txt %] 2>[% cdsrawcount.err %]
+
+ 
