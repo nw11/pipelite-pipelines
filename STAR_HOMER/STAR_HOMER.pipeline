@@ -19,7 +19,7 @@ repeatsrpkm. perl [% software.analyzeRNA.pl %] repeats mm10  -rpkm -strand both 
 repeatsrpkm.mem 32000
 utr3rpkm. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 3utr -d [% homerMakeTagDir %]  > [% utr3rpkm.3utr.tsv %]
 utr5rpkm. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 5utr -d [% homerMakeTagDir %]  > [% utr5rpkm.5utr.tsv %]
-genesrpkm. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count genes -d [% homerMakeTagDir %]  > [% genesrpkm.genes.tsv %]
+genesrpkm. perl [% software.analyzeRNA.pl %] rna mm10 -rpkm -strand both -count genes -d [% homerMakeTagDir %]  > [% genesrpkm.genes.tsv %]
 
 #raw counts
 utr3rawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count 3utr -d [% homerMakeTagDir %]  > [% utr3rawcount.3utr.tsv %]
