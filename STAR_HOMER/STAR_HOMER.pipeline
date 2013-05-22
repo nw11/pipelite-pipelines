@@ -34,4 +34,4 @@ genesrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -
 #below doesn't work well on lsf for some reason. perhaps log in shell? Or too long?
 #regionsrawcount. paste <(cut -f16 --complement [% exonsrawcount.exons.tsv %] ) <(cut -f16 [% exonsrawcount.exons.tsv %]) <(cut -f16 [% intronsrawcount.introns.tsv %]) <(cut -f16 [% utr3rawcount.3utr.tsv %]) <( cut -f16 [% utr5rawcount.5utr.tsv %] ) <( cut -f16 [% utr5rawcount.5utr.tsv %] ) > [% regionsrawcount.regions.tsv %]
 #Just paste a file together and take the columns with a cut
-regionsrawcount. paste [% exonsrawcount.exons.tsv %] [% intronsrawcount.introns.tsv %] [% utr3rawcount.3utr.tsv %] [% utr5rawcount.5utr.tsv %] [% cdsrawcount.cds.tsv %] [% repeatsrawcount.repeats.tsv %] | cut -f1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,32,48,64,80,96 > [% regionsrawcount.regions.tsv %]
+regionsrawcount. paste [% exonsrawcount.exons.tsv %] [% intronsrawcount.introns.tsv %] [% utr3rawcount.3utr.tsv %] [% utr5rawcount.5utr.tsv %] [% cdsrawcount.cds.tsv %] [% genesrawcount.genes.tsv %] | cut -f1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,32,48,64,80,96 > [% regionsrawcount.regions.tsv %]
