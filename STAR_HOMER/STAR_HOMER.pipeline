@@ -19,6 +19,7 @@ repeatsrpkm. perl [% software.analyzeRNA.pl %] repeats mm10  -rpkm -strand both 
 repeatsrpkm.mem 32000
 utr3rpkm. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 3utr -d [% homerMakeTagDir %]  > [% utr3rpkm.3utr.tsv %]
 utr5rpkm. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -strand both -count 5utr -d [% homerMakeTagDir %]  > [% utr5rpkm.5utr.tsv %]
+genesrpkm. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count genes -d [% homerMakeTagDir %]  > [% genesrpkm.genes.tsv %]
 
 #raw counts
 utr3rawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count 3utr -d [% homerMakeTagDir %]  > [% utr3rawcount.3utr.tsv %]
@@ -28,7 +29,7 @@ exonsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -
 cdsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count cds -d [% homerMakeTagDir %]  > [% cdsrawcount.cds.tsv %]
 repeatsrawcount. perl [% software.analyzeRNA.pl %] repeats mm10  -noadj -strand both -d  [% homerMakeTagDir %] > [% repeatsrawcount.repeats.tsv %]
 repeatsrawcount.mem 32000
-
+genesrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count genes -d [% homerMakeTagDir %]  > [% genesrawcount.genes.tsv %]
 #aggregate
 #below doesn't work well on lsf for some reason. perhaps log in shell? Or too long?
 #regionsrawcount. paste <(cut -f16 --complement [% exonsrawcount.exons.tsv %] ) <(cut -f16 [% exonsrawcount.exons.tsv %]) <(cut -f16 [% intronsrawcount.introns.tsv %]) <(cut -f16 [% utr3rawcount.3utr.tsv %]) <( cut -f16 [% utr5rawcount.5utr.tsv %] ) <( cut -f16 [% utr5rawcount.5utr.tsv %] ) > [% regionsrawcount.regions.tsv %]
