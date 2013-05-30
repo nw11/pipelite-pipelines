@@ -30,6 +30,7 @@ cdsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -co
 repeatsrawcount. perl [% software.analyzeRNA.pl %] repeats mm10  -noadj -strand both -d  [% homerMakeTagDir %] > [% repeatsrawcount.repeats.tsv %]
 repeatsrawcount.mem 32000
 genesrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -strand both -count genes -d [% homerMakeTagDir %]  > [% genesrawcount.genes.tsv %]
+spikesrawcount. perl [% software.analyzeRNA.pl %] [% input.ERCC92.gtf %] -noadj -strand both -count exons -d [% homerMakeTagDir %]  > [% spikesrawcount.spikes.tsv %]
 #aggregate
 #below doesn't work well on lsf for some reason. perhaps log in shell? Or too long?
 #regionsrawcount. paste <(cut -f16 --complement [% exonsrawcount.exons.tsv %] ) <(cut -f16 [% exonsrawcount.exons.tsv %]) <(cut -f16 [% intronsrawcount.introns.tsv %]) <(cut -f16 [% utr3rawcount.3utr.tsv %]) <( cut -f16 [% utr5rawcount.5utr.tsv %] ) <( cut -f16 [% utr5rawcount.5utr.tsv %] ) > [% regionsrawcount.regions.tsv %]
