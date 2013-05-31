@@ -5,7 +5,7 @@ star.output Aligned.out.sam Log.final.out Log.out Log.progress.out SJ.out.tab
 
 #make a bam file
 sam2bam. samtools view -Sbh [% star.output1 %] > [% sam2bam.staraligned.bam %]
-sortedbam. cd [% sortedbam %]; samtools sort -o [% sam2bam.staraligned.bam %] > [% sortedbam.staralignedchrsort.bam %]; samtools sort -o -n [% sam2bam.staraligned.bam %]  > [% sortedbam.staralignednamesort.bam %] 
+sortedbam. cd [% sortedbam %]; samtools sort -o [% sam2bam.staraligned.bam %] [% step0.sample %] > [% sortedbam.staralignedchrsort.bam %]; samtools sort -o -n [% sam2bam.staraligned.bam %]  > [% sortedbam.staralignednamesort.bam %] 
 bamindex. samtools index [% sortedbam.staralignedchrsort.bam %]
 #bamindex.output staraligned.bam.bai
 
