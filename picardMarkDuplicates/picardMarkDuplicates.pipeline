@@ -1,0 +1,1 @@
+markduplicates. [% software.picardmarkduplicates %] INPUT=[% step0.file1 %] OUTPUT=[% markduplicates.dupmarked.sam %] METRICS_FILE=[% markduplicates.metrics.txt %]
