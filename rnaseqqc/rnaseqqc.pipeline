@@ -1,1 +1,2 @@
-genebodycoverage. [% software.geneBody_coverage.py %] -i [% step0.file1 %] -r [% input.GRCm38_mm10_Ensembl.bed %] -o genebody -t png
+genebodycoverage. [% software.geneBody_coverage.py %] -i [% step0.file1 %] -r [% input.GRCm38_mm10_Ensembl.bed %] -o [% genebodycoverage.genebodycov %]
+genebodycoverage.output genebodycov.geneBodyCoverage.txt
