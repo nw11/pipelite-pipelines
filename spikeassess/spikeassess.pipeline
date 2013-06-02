@@ -1,2 +1,2 @@
-spikejoin. join --header -t $'\t' <( head -n 1 [% input.ERCC_Controls_Analysis.txt %] && tail +2 [% input.ERCC_Controls_Analysis.txt %] | sort -k2,2)  <( head -n 1 [% step0.file1 %] && tail +2 [% step0.file1 %] | sort ) 
+spikejoin. join --header -t $'\t' <( head -n 1 [% input.ERCC_Controls_Analysis.txt %] && tail -n +2 [% input.ERCC_Controls_Analysis.txt %] | sort -k2,2)  <( head -n 1 [% step0.file1 %] && tail -n +2 [% step0.file1 %] | sort ) 
 #| egrep -v '0$' | join -t $'\t' - <(head -n -5 /lustre/scratch102/user/nw11/Pipelines/htseq_count/output/run9/job1/step2/file1.txt | sort)
