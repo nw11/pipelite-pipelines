@@ -1,4 +1,4 @@
-erccsort. (head -n 1 [% input.ERCC_Controls_Analysis.txt %] && tail -n +2 [% input.ERCC_Controls_Analysis.txt %] | sort -k2,2) > [% global.erccsort.tsv %]
+erccsort.once (head -n 1 [% input.ERCC_Controls_Analysis.txt %] && tail -n +2 [% input.ERCC_Controls_Analysis.txt %] | sort -k2,2) > [% global.erccsort.tsv %]
 spikerawcountsort. (head -n 1 [% step0.file1 %] && tail -n +2 [% step0.file1 %] | sort -k2,2 ) > [% spikerawcountsort.spike.tsv %]
 spikerawcountpaste.once paste [% global.erccsort.tsv %] [% jobs.spikerawcountsort.spike.tsv %] > [% spikerawcountpaste.spikes.tsv %]
 spikerpkmsort. (head -n 1 [% step0.file2 %] && tail -n +2 [% step0.file2 %] | sort -k2,2 ) > [% spikerpkmsort.spike.tsv %]
