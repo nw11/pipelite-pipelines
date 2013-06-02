@@ -1,6 +1,6 @@
 spikesort. (head -n 1 [% step0.file1 %] && tail -n +2 [% step0.file1 %] | sort -k2,2 ) > [% spikesort.spike.tsv %]
 erccsort. (head -n 1 [% input.ERCC_Controls_Analysis.txt %] && tail -n +2 [% input.ERCC_Controls_Analysis.txt %] | sort -k2,2) > [% global.erccsort.tsv %]
-spikepaste.once [% global.erccsort.tsv %] [% jobs.spikesort.spike.tsv %]
+spikepaste.once paste [% global.erccsort.tsv %] [% jobs.spikesort.spike.tsv %]
 #header is not supported on some systems so can it.
 #spikejoin. join -1 2 -2 2 --header -t $'\t' [% global.erccsort.tsv %] [% spikesort.spike.tsv %]
 #spikejoin. join -1 2 -2 2 --header -t $'\t' <( head -n 1 [% input.ERCC_Controls_Analysis.txt %] && tail -n +2 [% input.ERCC_Controls_Analysis.txt %] | sort -k2,2)  <( head -n 1 [% step0.file1 %] && tail -n +2 [% step0.file1 %] | sort -k2,2 ) 
