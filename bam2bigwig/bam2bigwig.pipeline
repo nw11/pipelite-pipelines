@@ -1,0 +1,14 @@
+# Get a genome coverage bedgraph
+genomecoverage. [% software.bedtools %] genomecov -bg -ibam [% step0.file1.sorted.bam %] > [% genomecoverage.file1.bedgraph %]
+
+# Convert to bigwig
+# input bedgrah must be sorted
+#  sort -k1,1 -k2,2n unsorted.bedGraph > sorted.bedGraph
+sortbedgraph. sort -k1,1 -k2,2n [% genomecoverage.file1.bedgraph %] > [% sortbedgraph.file1.sorted.bedgraph %]
+
+#optional step to convert ENSEMBL id's to ucsc
+#8. egrep '^[0-9M]+' [% step7.file1.sorted.bedgraph %] | sed -e 's/^\([0-9XY][0-9]*\)/chr\1/; s/^MT/chrM/;' > [% step8.file1.chrfix.bedgraph %]
+
+#to show in ucsc we prob should conver
+bedgraph2bigwig. [% software.bedGraphToBigWig %] [% sortbedgraph.file1.sorted.bedgraph %] [% input.mm10.sizes %] [% bedgraph2bigwig.file1.bw %]
+
