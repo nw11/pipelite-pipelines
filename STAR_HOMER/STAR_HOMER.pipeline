@@ -23,6 +23,8 @@ utr5rpkm. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -count 5utr -d [% ho
 genesrpkm. perl [% software.analyzeRNA.pl %] rna mm10 -rpkm -count genes -d [% homerMakeTagDir %]  > [% genesrpkm.genes.tsv %]
 spikesrpkm. perl [% software.analyzeRNA.pl %] [% input.ERCC92.gtf %] mm10 -rpkm -count exons -d [% homerMakeTagDir %]  > [% spikesrpkm.spikes.tsv %]
 
+regionsrpkm. paste [% exonsrpkm.exons.tsv %] [% intronsrpkm.introns.tsv %] [% utr3rpkm.3utr.tsv %] [% utr5rpkm.5utr.tsv %] [% cdsrpkm.cds.tsv %] [% genesrpkm.genes.tsv %] | cut -f1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,32,48,64,80,96 > [% regionsrpkm.regions.tsv %]
+
 #raw counts
 utr3rawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -count 3utr -d [% homerMakeTagDir %]  > [% utr3rawcount.3utr.tsv %]
 utr5rawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -count 5utr -d [% homerMakeTagDir %]  > [% utr5rawcount.5utr.tsv %]
