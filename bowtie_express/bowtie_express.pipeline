@@ -1,0 +1,7 @@
+bowtieexpress.  [% software.bowtie %] [% step0.bowtie_reference_location %] -1 [% step0.fastq1 %] -2 [% step0.fastq2 %] | [% software.express %] --output-dir [% bowtieexpress.dir1 %] [% step0.reference_transcripts %]
+bowtieexpress.mem 32000
+bowtieexpress.output dir1/results.xprs
+
+# sort the file by ensembl name (2nd column) dealing with the header first (making it sample specific), and remove the  mm10_ensGene_ from the ensembl id
+sortexpressoutput. head -n 1 [% bowtieexpress.output1 %] | perl -lane 'print join "\t", map { $_ . ".[% step0.sample %]" } @F' >  [% sortexpressoutput.expressout.sorted %]; tail -n +2 [% sortexpressoutput.expressout.expressout.sorted %] | sed 's/mm10_ensGene_//g' | sort -k2,2 >> [% sortexpressoutput.expressout.sorted %]
+
