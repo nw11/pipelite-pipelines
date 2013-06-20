@@ -1,3 +1,14 @@
 genebodycoverage. [% software.geneBody_coverage.py %] -i [% step0.file1 %] -r [% input.GRCm38_mm10_Ensembl.bed %] -o [% genebodycoverage.genebodycov %]
 genebodycoverage.output genebodycov.geneBodyCoverage.txt
 genebodycoverage.mem 16000
+
+genebodycoveragegraph. echo '
+  t = read.table(skip=2, header=TRUE, "[% genebodycoverage.output1 %]");
+  png("[% genebodycoveragegraph.coverage.png %]");
+  barplot(t$count, names.arg=c(t$percentile), main="Normalised Average Read Coverage over ENSEMBL Genes", xlab="5' -> 3' percentile", ylab="read count");
+  dev.off();
+' | [% software.Rscript %] -
+
+
+readduplication. [% software.read_duplication.py %] -i [% step0.file1 %] -o [% readduplication.readdup %]
+readduplication.output readdup.DupRate_plot.r 
