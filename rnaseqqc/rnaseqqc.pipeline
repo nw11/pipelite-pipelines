@@ -15,3 +15,5 @@ readduplication.output readdup.DupRate_plot.r
 
 readgc. [% software.read_GC.py %] -i [% step0.file1 %] -o [% readgc.readgc %]
 readgc.output readgc.GC_plot.r
+
+rpkmcountribo. [% software.RPKM_count.py %] -i [% step0.file1 %] -o [% rpkmcountribo.riborpkm %] -r [% input.mm10_rRNA.bed %] -d '1++,1--,2+-,2-+' 
