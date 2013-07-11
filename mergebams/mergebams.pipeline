@@ -1,0 +1,8 @@
+# Expects a comma delimited string of the file names
+picardmergesamfiles. perl -e ' 
+my @files = split ',', $ARGV[0];
+my $input = join "INPUT=", @files;
+$input = "INPUT=" . $input;
+my $cmd = "[% software.picardMergeSamFiles %] $input OUTPUT=[% picardmergesamfiles.file1.bam %]" 
+system($cmd);
+'  [% step0.bams %]
