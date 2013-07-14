@@ -2,7 +2,7 @@
 # It's unlikely that we would need to do this for a sam file, but just in case we convert the sam to a bam if required
 sambam. perl -e 'if ( -B qq|[% step0.file1 %]| ){ system( qq|ln -s [% step0.file1 %] [% sambam.file1 %]|) }else{ system( qq| samtools view -bS [% step0.file1 %] > [% sambam.file1 %] |  )  }'
 
-bam2fastq. bam2fastq -o [% bam2fastq.bam %]#.fastq [% sambam.file1 %]
+bam2fastq. bam2fastq -o [% bam2fastq.file1 %]#.fastq [% sambam.file1 %]
 bam2fastq.output file1_1.fastq file1_2.fastq
 
 checkreadcounts. perl -e '$sf = `samtools flagstat [% sambam.file1 %] | egrep "read1|read2" | cut -f1 -d" "`;
