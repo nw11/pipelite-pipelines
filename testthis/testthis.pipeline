@@ -1,0 +1,1 @@
+1. wc -l [% step0.file1 %] > [% step1.file1 %]
