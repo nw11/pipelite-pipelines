@@ -1,1 +1,15 @@
-1. wc -l [% step0.file1 %] > [% step1.file1 %]
+#Write command to send bam to hub
+scpcmd. echo 'scp [% step0.file1 %] [% step0.sshlogin %]:[% step0.ftp_base_dir %][% step0.sample %][% step0.file1ext %]' > [% scpcmd.scpcmd.txt %]
+
+#command to copy the index .bai files across too
+scpcmdB. echo 'scp [% step0.file1 %].[% step0.file2ext %] [% step0.sshlogin %]:[% step0.ftp_base_dir %][% step0.sample %].[% step0.file1ext %].[% step0.file2ext %]' >> [% scpcmd.scpcmd.txt %]
+
+maketrackentry. echo '
+track [% step0.sample %]_reads
+bigDataUrl [% step0.ftp_base_dir %][% step0.sample %][% step0.file1ext %]
+shortLabel [% step0.sample %]_RNA_SEQ
+longLabel [% step0.sample %]_RNA_SEQ
+type bigWig' > [% maketrackentry.file1.txt %]
+
+writeallsshentries.once cat [% jobs.scpcmd.scpcmd.txt %] > [% global.scpcmd.sh %]
+writealltrackentries.once cat [% jobs.maketrackentry.file1.txt %] > [% global.ucschub.txt %]
