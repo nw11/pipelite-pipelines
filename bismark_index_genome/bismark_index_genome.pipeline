@@ -1,0 +1,2 @@
+# Both bisulfite genomes will be stored in subfolders within the reference
+bismarkindex. [% software.bismark_genome_preperation %] --bowtie [% software.bowtie1_dir %] --verbose [% step0.genome_dir %]
