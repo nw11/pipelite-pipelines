@@ -1,3 +1,4 @@
 #step0.alignmentfiles = <sample1_hits.sam> <sample2_hits.sam> [... sampleN_hits.sam]
 #Supply replicate SAMs as comma separated lists for each condition: sample1_rep1.sam,sample1_rep2.sam,...sample1_repM.sam
 cuffdiff. [% software.cuffdiff %] --output-dir [% cuffdiff %] [% input.genes.gtf %] [% step0.samplealignments %]
+cuffdiff.memory 20000
