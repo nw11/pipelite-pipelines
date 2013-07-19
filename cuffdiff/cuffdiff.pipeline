@@ -4,5 +4,5 @@ cuffdiff. [% software.cuffdiff %] -L [% step0.samplelabel %] --output-dir [% cuf
 cuffdiff.mem 20000
 
 #tar up the files so that we can analyse else where if need be
-tardir. tar -zcvf [% tar %]/cuffdiff.tar.gz --exclude='err' [% cuffdiff %]
+tardir. tar -zcvf [% tardir %]/cuffdiff.tar.gz --exclude='err' [% cuffdiff %]
 tardir. cuffdiff.tar.gz
