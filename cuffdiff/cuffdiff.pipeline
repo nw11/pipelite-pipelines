@@ -3,5 +3,5 @@
 cuffdiff. [% software.cuffdiff %] -L [% step0.samplelabel %] --output-dir [% cuffdiff %] [% input.genes.gtf %] [% step0.samplealignments %]
 cuffdiff.mem 20000
 #tar up the files so that we can analyse else where if need be
-tardir. tar -zcvf [% tardir %] --exclude='err' [% cuffdiff %]
-tardir. cuffdiff.tar.gz
+tardir. tar -zcvf [% tardir %]/cuffdiff.tar.gz --exclude='err' [% cuffdiff %]
+tardir.output cuffdiff.tar.gz
