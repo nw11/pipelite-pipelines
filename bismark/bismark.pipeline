@@ -8,5 +8,5 @@ bismark.output file1_1_val_1.fq_bismark_pe.sam file1_1_val_1.fq_bismark_PE_repor
 
 methylationextractor. source ~/bin/localperl; perl [% software.bismark_methylation_extractor %] -s --report --bedGraph --cytosine_report --output [% methylationextractor %] --genome_folder [% step0.bismark_genome_dir %] [% bismark.output1 %]
 methylationextractor.output file2.bedGraph
-methylationextractor.mem 32000
+methylationextractor.mem 48000
 
