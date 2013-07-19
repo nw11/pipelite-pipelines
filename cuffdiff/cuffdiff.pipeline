@@ -2,7 +2,6 @@
 #Supply replicate SAMs as comma separated lists for each condition: sample1_rep1.sam,sample1_rep2.sam,...sample1_repM.sam
 cuffdiff. [% software.cuffdiff %] -L [% step0.samplelabel %] --output-dir [% cuffdiff %] [% input.genes.gtf %] [% step0.samplealignments %]
 cuffdiff.mem 20000
-
 #tar up the files so that we can analyse else where if need be
-tardir. tar -zcvf [% tardir %] cuffdiff.tar.gz --exclude='err' [% cuffdiff %]
+tardir. tar -zcvf [% tardir %] --exclude='err' [% cuffdiff %]
 tardir. cuffdiff.tar.gz
