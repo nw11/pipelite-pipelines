@@ -1,0 +1,13 @@
+#star
+#step0.strandoption should be  "--outSAMstrandField intronMotif" if non stranded, otherwise stranded
+star. cd [% star %]; [% software.STAR %] --genomeDir [% step0.star_genome_dir %] --readFilesIn [% step0.fastq1 %] [% step0.fastq2 %] --runThreadN 8 [% step0.strandoption %] --outFilterMatchNminOverLread 0 --outFilterScoreMinOverLread 0 > [% star.star.out %]
+star.mem 64000
+star.output Aligned.out.sam Log.final.out Log.out Log.progress.out SJ.out.tab
+
+#make a bam file
+sam2bam. samtools view -Sbh [% star.output1 %] > [% sam2bam.staraligned.bam %]
+sortedbam. cd [% sortedbam %]; samtools sort -o [% sam2bam.staraligned.bam %] [% step0.sample %] > [% sortedbam.staralignedchrsort.bam %]; samtools sort -o -n [% sam2bam.staraligned.bam %] [% step0.sample %] > [% sortedbam.staralignednamesort.bam %]
+sortedbam.mem 16000
+
+#index the bam
+bamindex. samtools index [% sortedbam.staralignedchrsort.bam %]
