@@ -2,11 +2,14 @@ trimgalore. [% software.trimgalore %] --fastqc --trim1 --paired -o [% trimgalore
 trimgalore.mem 4000
 trimgalore.output file1_1_val_1.fq file1_2_val_2.fq
 
-bismark. perl [% software.bismark %]  -o [% bismark %] --temp_dir [% bismark.dir1 %] [% step0.bismark_genome_dir %] -1 [% trimgalore.output1 %] -2 [% trimgalore.output2 %] > [% bismark.out %]
+# The source ensures we are running under a perl that has Perl module GD::Graph::pie
+# otherwise we don't get the pie chart - this will eventually be part of a pre-command option since it is system specific
+bismark. source ~/bin/localperl; perl [% software.bismark %]  -o [% bismark %] --temp_dir [% bismark.dir1 %] [% step0.bismark_genome_dir %] -1 [% trimgalore.output1 %] -2 [% trimgalore.output2 %] > [% bismark.out %]
 bismark.mem 32000
 bismark.output file1_1_val_1.fq_bismark_pe.sam file1_1_val_1.fq_bismark_PE_report.txt
 
 #step0.paired_or_single_end should be -p or -s
+#source ensures we have some perl modules required by methylationextractor
 methylationextractor. source ~/bin/localperl; cd [% methylationextractor %]; perl [% software.bismark_methylation_extractor %] [% step0.paired_or_single_end %] --report --bedGraph --cytosine_report --output [% methylationextractor %] --genome_folder [% step0.bismark_genome_dir %] [% bismark.output1 %] > [% methylationextractor.out %]
 methylationextractor.output file2.bedGraph
 methylationextractor.mem 48000
