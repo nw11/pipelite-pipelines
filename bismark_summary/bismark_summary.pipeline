@@ -1,0 +1,11 @@
+#make the first column of row descriptors 
+makerowdesc. echo ' -- ' > [% global.rowdesc.txt %]; tail -n +5 [% step0.bismark_PE_report %] | cut -f1 >> [% global.rowdesc.txt %]
+
+#create column header and get the column values 
+getcolumn. echo '[% step0.phenotype %]_[% step0.gender %]_[% step0.sample %]' > [% getcolumn.column %]; tail -n +5 [% step0.bismark_PE_report %] | cut -f2  >> [% getcolumn.column %];
+getcolumn.after makerowdesc
+
+## joins everything into a table
+maketable.once paste [% global.bismarksummary.txt %] [% jobs.getcolumn.column %]  > [% global.bismarktable.txt %]
+maketable.after getcolumn
+
