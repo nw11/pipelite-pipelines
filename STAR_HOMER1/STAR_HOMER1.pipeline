@@ -1,0 +1,44 @@
+#star
+#step0.strandoption should be  "--outSAMstrandField intronMotif" if non stranded, otherwise stranded
+star. cd [% star %]; [% software.STAR %] --genomeDir [% step0.star_genome_dir %] --readFilesIn [% step0.fastq1 %] [% step0.fastq2 %] --runThreadN 8 [% step0.strandoption %] --outFilterMatchNminOverLread 0 --outFilterScoreMinOverLread 0 > [% star.star.out %]
+star.mem 64000
+star.output Aligned.out.sam Log.final.out Log.out Log.progress.out SJ.out.tab
+
+#make a bam file
+sam2bam. samtools view -Sbh [% star.output1 %] > [% sam2bam.staraligned.bam %]
+sortedbam. cd [% sortedbam %]; samtools sort -o [% sam2bam.staraligned.bam %] [% step0.sample %] > [% sortedbam.staralignedchrsort.bam %]; samtools sort -o -n [% sam2bam.staraligned.bam %] [% step0.sample %] > [% sortedbam.staralignednamesort.bam %] 
+sortedbam.mem 16000
+bamindex. samtools index [% sortedbam.staralignedchrsort.bam %]
+#bamindex.output staraligned.bam.bai
+
+#make tag directry
+homerMakeTagDir. [% software.makeTagDir %] [% homerMakeTagDir %] [% star.output1 %] -checkGC -fragLength 150 -genome mm10 -format sam
+homerMakeTagDir.mem 16000
+#rpkms
+cdsrpkm. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -count cds -d [% homerMakeTagDir %]  > [% cdsrpkm.cds.tsv %]
+exonsrpkm. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -count exons   -d [% homerMakeTagDir %]  > [% exonsrpkm.exons.tsv %]
+intronsrpkm. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -count introns -d [% homerMakeTagDir %]  > [% intronsrpkm.introns.tsv %]
+repeatsrpkm. perl [% software.analyzeRNA.pl %] repeats mm10  -rpkm -d  [% homerMakeTagDir %] > [% repeatsrpkm.repeats.tsv %]
+repeatsrpkm.mem 32000
+utr3rpkm. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -count 3utr -d [% homerMakeTagDir %]  > [% utr3rpkm.3utr.tsv %]
+utr5rpkm. perl [% software.analyzeRNA.pl %] rna mm10  -rpkm -count 5utr -d [% homerMakeTagDir %]  > [% utr5rpkm.5utr.tsv %]
+genesrpkm. perl [% software.analyzeRNA.pl %] rna mm10 -rpkm -count genes -d [% homerMakeTagDir %]  > [% genesrpkm.genes.tsv %]
+spikesrpkm. perl [% software.analyzeRNA.pl %] [% input.ERCC92.gtf %] mm10 -rpkm -count exons -d [% homerMakeTagDir %]  > [% spikesrpkm.spikes.tsv %]
+
+regionsrpkm. paste [% exonsrpkm.exons.tsv %] [% intronsrpkm.introns.tsv %] [% utr3rpkm.3utr.tsv %] [% utr5rpkm.5utr.tsv %] [% cdsrpkm.cds.tsv %] [% genesrpkm.genes.tsv %] | cut -f1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,32,48,64,80,96 > [% regionsrpkm.regions.tsv %]
+
+#raw counts
+utr3rawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -count 3utr -d [% homerMakeTagDir %]  > [% utr3rawcount.3utr.tsv %]
+utr5rawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -count 5utr -d [% homerMakeTagDir %]  > [% utr5rawcount.5utr.tsv %]
+intronsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -count introns -d [% homerMakeTagDir %]  > [% intronsrawcount.introns.tsv %]
+exonsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -count exons   -d [% homerMakeTagDir %]  > [% exonsrawcount.exons.tsv %]
+cdsrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -count cds -d [% homerMakeTagDir %]  > [% cdsrawcount.cds.tsv %]
+repeatsrawcount. perl [% software.analyzeRNA.pl %] repeats mm10  -noadj -d  [% homerMakeTagDir %] > [% repeatsrawcount.repeats.tsv %]
+repeatsrawcount.mem 32000
+genesrawcount. perl [% software.analyzeRNA.pl %] rna mm10  -noadj -count genes -d [% homerMakeTagDir %]  > [% genesrawcount.genes.tsv %]
+spikesrawcount. perl [% software.analyzeRNA.pl %] [% input.ERCC92.gtf %] mm10 -noadj -count exons -d [% homerMakeTagDir %]  > [% spikesrawcount.spikes.tsv %]
+#aggregate
+#below doesn't work well on lsf for some reason. perhaps log in shell? Or too long?
+#regionsrawcount. paste <(cut -f16 --complement [% exonsrawcount.exons.tsv %] ) <(cut -f16 [% exonsrawcount.exons.tsv %]) <(cut -f16 [% intronsrawcount.introns.tsv %]) <(cut -f16 [% utr3rawcount.3utr.tsv %]) <( cut -f16 [% utr5rawcount.5utr.tsv %] ) <( cut -f16 [% utr5rawcount.5utr.tsv %] ) > [% regionsrawcount.regions.tsv %]
+#Just paste a file together and take the columns with a cut
+regionsrawcount. paste [% exonsrawcount.exons.tsv %] [% intronsrawcount.introns.tsv %] [% utr3rawcount.3utr.tsv %] [% utr5rawcount.5utr.tsv %] [% cdsrawcount.cds.tsv %] [% genesrawcount.genes.tsv %] | cut -f1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,32,48,64,80,96 > [% regionsrawcount.regions.tsv %]
