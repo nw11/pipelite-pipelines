@@ -1,6 +1,6 @@
 # execute something like this below
 #plite2 file -r [% step0.starrunnum %] -s sortedbam -n staralignedchrsort.bam -f 'step0.sample step0.cond' --datasource /lustre/scratch102/user/nw11/pipelite-pipelines/STAR_HOMER1/output/run6/settings/STAR_HOMER1.resolved.datasource  STAR_HOMER1/
 #condcol is the column number of the column describing the condition
-sortandgroup. [% software.sort-header.in %] --header 1 -k[% step0.condcol %],[% step0.condcol %] [% step0.datasourcefile %]  | groupBy -i - -header -g [% step0.condcol %] -c [% step0.filenamecol %] -o collapse > [% sortandgroup.grouped.tsv %]
+sortandgroup. [% software.sortheader.in %] --header 1 -k[% step0.condcol %],[% step0.condcol %] [% step0.datasourcefile %]  | groupBy -i - -header -g [% step0.condcol %] -c [% step0.filenamecol %] -o collapse > [% sortandgroup.grouped.tsv %]
 
 cuffdiffcmd. perl -lane 'BEGIN{@cond,@file}{ next if $. ==1; push @cond, $F[0]; push @file, $F[1] }END{ $condstr = join ",", @cond; $filestr = join " ", @file; print "cuffdiff", " -L $condstr", " [% cuffdiffcmd %] ", " $filestr " }' [% sortandgroup.grouped.tsv %] > [% cuffdiffcmd.cuffdiff.txt %] 
