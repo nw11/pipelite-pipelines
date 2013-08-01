@@ -3,4 +3,18 @@
 #condcol is the column number of the column describing the condition
 sortandgroup. [% software.sortheader.in %] --header 1 -k[% step0.condcol %],[% step0.condcol %] [% step0.datasourcefile %]  | groupBy -i - -header -g [% step0.condcol %] -c [% step0.filenamecol %] -o collapse > [% sortandgroup.grouped.tsv %]
 
-cuffdiffcmd. perl -lane 'BEGIN{@cond,@file}{ next if $. ==1; push @cond, $F[0]; push @file, $F[1] }END{ $condstr = join ",", @cond; $filestr = join " ", @file; print "cuffdiff", " -L $condstr", " [% input.genes.gtf %] ", " $filestr " }' [% sortandgroup.grouped.tsv %] > [% cuffdiffcmd.cuffdiff.txt %] 
+cuffdiffcmd. perl -lane '
+BEGIN{
+my @cond;
+my @file;
+}
+{ next if $. ==1; 
+push @cond, $F[0]; 
+push @file, $F[1]; 
+}
+END{ 
+$condstr = join ",", @cond; 
+$filestr = join " ", @file; 
+my $mask_file_option =" -M [% input.mm10_rRNA_tRNA.gtf %]"; 
+print "cuffdiff", " -L $condstr", " $mask_file_option ", " [% input.genes.gtf %] ", " $filestr "; 
+}' [% sortandgroup.grouped.tsv %] > [% cuffdiffcmd.cuffdiff.txt %] 
