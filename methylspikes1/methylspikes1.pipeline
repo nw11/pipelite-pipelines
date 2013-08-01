@@ -1,0 +1,59 @@
+spikepairA. tail -n +2 [% step0.fastq1 %] | awk '{ if( NR % 4 == 1 ) {print $_} }' | egrep '^[CT]T[CT]A[CT][CT][CT]A[CT]AA[CT][CT]A[CT]AAA[CT]AATTTAAATA[CT]GATTAAATAATATTAATATATTAT[CT]GATTAAATAATAATTAATTAATATTTGATGTGATGGGTGGTATGG' | perl -ne '
+BEGIN {
+@c   = qw(1 3 5 6 7 9 12 13 15 19 30 55);
+@mc  = qw(3 6 13 30 55);
+@hc  = qw(30 55);
+@cpos  = map { $_ -1 } @c;
+@mcpos = map { $_ -1 } @mc;
+};
+@seq = split "", $_;
+print STDERR @seq,"\n";
+$i = 0;
+foreach $cpos (@cpos){
+ $chash{$cpos}++ if $seq[$cpos] eq 'C';
+ $thash{$cpos}++ if $seq[$cpos] eq 'T';
+ print STDERR $cpos, " ", $seq[$cpos], "\n";
+}
+END{
+ @pos = sort { $a <=> $b } keys %chash ;
+ foreach my $p (@pos){
+   $ratiohash{$p} = $thash{$p} / ($thash{$p} + $chash{$p});
+ }
+ @pos1 = map { $_ +1 } @pos;
+ print join "\t", "Sample", @pos1, "\n";
+ print STDERR join "\t", @chash{ @pos }, "\n";
+ print STDERR join "\t", @thash{ @pos }, "\n";
+ print join "\t","[% step0.sample %]_[% step0.phenotype %]_[% step0.gender %]", @ratiohash{ @pos }, "\n";
+}' > [% spikepairA.file1 %]
+
+spikepairAsummary.once cat [% jobs.step1.file1 %] > [% global.conv_eff_spike38 %]
+
+spikepairB. tail -n +2 [% step0.fastq1 %] | awk '{ if( NR % 4 == 1 ) {print $_} }' | egrep '^T[CT]A[CT][CT]AT[CT]TA[CT][CT]AT[CT][CT]AA[CT][CT]ATTTAAATA[CT]GATTAAATAA[CT]ATTAATATATTAT[CT]GATTAAATAAGAATTAATTAATATTTGATGTGATGGGTGGTATG' | perl -ne '
+BEGIN {
+@c   = qw(2 4 5 8 11 12 15 16 19 20 30 41 55);
+@mc  = qw(4 8 16);
+@hc  = qw(41);
+@cpos  = map { $_ -1 } @c;
+@mcpos = map { $_ -1 } @mc;
+};
+@seq = split "", $_;
+print STDERR @seq,"\n";
+$i = 0;
+foreach $cpos (@cpos){
+ $chash{$cpos}++ if $seq[$cpos] eq 'C';
+ $thash{$cpos}++ if $seq[$cpos] eq 'T';
+ print STDERR $cpos, " ", $seq[$cpos], "\n";
+}
+END{
+ @pos = sort { $a <=> $b } keys %chash ;
+ foreach my $p (@pos){
+   $ratiohash{$p} = $thash{$p} / ($thash{$p} + $chash{$p});
+ }
+ @pos1 = map { $_ +1 } @pos;
+ print join "\t", "Sample", @pos1, "\n";
+ print STDERR join "\t", @chash{ @pos }, "\n";
+ print STDERR join "\t", @thash{ @pos }, "\n";
+ print join "\t","[% step0.sample %]_[% step0.phenotype %]_[% step0.gender %]", @ratiohash{ @pos }, "\n";
+}' > [% spikepairB.file1 %]
+
+spikepairBsummary.once cat [% jobs.step3.file1 %] > [% global.conv_eff_spike68 %]
