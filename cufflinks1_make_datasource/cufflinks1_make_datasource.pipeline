@@ -19,7 +19,7 @@ END{
 $condstr = join ",", @cond; 
 $filestr = join " ", @file; 
 my $mask_file_option =" -M [% input.mm10_rRNA_tRNA.gtf %]"; 
-my $output_dir_option = " --output-dir [% cuffdiffrun %] ";
+my $output_dir_option = " --output-dir [% cuffdiffcmd %] ";
 print "cuffdiff", " -L $condstr", " $mask_file_option ", " $output_dir_option ", " [% input.genes.gtf %] ", " $filestr "; 
 }' [% sortandgroup.grouped.tsv %] > [% cuffdiffcmd.cuffdiff.txt %]
 
@@ -28,5 +28,6 @@ cuffdiffrun.mem 48000
 cuffdiffrun.queue long
 
 #tar up the files so that we can analyse else where if need be
-tardir. tar -zcvf [% tardir %]/cuffdiff.tar.gz --exclude='err' [% cuffdiffrun %]
-tardir.output cuffdiff.tar.gz 
+tardir. tar -zcvf [% tardir %]/cuffdiff.tar.gz --exclude='err' [% cuffdiffcmd %]
+tardir.output cuffdiff.tar.gz
+tardir.after cuffdiffrun
