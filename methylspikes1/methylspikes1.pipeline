@@ -26,7 +26,7 @@ END{
  print join "\t","[% step0.sample %]_[% step0.phenotype %]_[% step0.gender %]", @ratiohash{ @pos }, "\n";
 }' > [% spikepairA.file1 %]
 
-spikepairAsummary.once cat [% jobs.step1.file1 %] > [% global.conv_eff_spike38 %]
+spikepairAsummary.once cat [% jobs.spikepairA.file1 %] > [% global.conv_eff_spike38 %]
 
 spikepairB. tail -n +2 [% step0.fastq1 %] | awk '{ if( NR % 4 == 1 ) {print $_} }' | egrep '^T[CT]A[CT][CT]AT[CT]TA[CT][CT]AT[CT][CT]AA[CT][CT]ATTTAAATA[CT]GATTAAATAA[CT]ATTAATATATTAT[CT]GATTAAATAAGAATTAATTAATATTTGATGTGATGGGTGGTATG' | perl -ne '
 BEGIN {
@@ -56,4 +56,4 @@ END{
  print join "\t","[% step0.sample %]_[% step0.phenotype %]_[% step0.gender %]", @ratiohash{ @pos }, "\n";
 }' > [% spikepairB.file1 %]
 
-spikepairBsummary.once cat [% jobs.step3.file1 %] > [% global.conv_eff_spike68 %]
+spikepairBsummary.once cat [% jobs.spikepairB.file1 %] > [% global.conv_eff_spike68 %]
