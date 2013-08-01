@@ -23,8 +23,10 @@ my $output_dir_option = " --output-dir [% cuffdiffrun %] ";
 print "cuffdiff", " -L $condstr", " $mask_file_option ", " $output_dir_option ", " [% input.genes.gtf %] ", " $filestr "; 
 }' [% sortandgroup.grouped.tsv %] > [% cuffdiffcmd.cuffdiff.txt %]
 
-#cuffdiffrun. bash [% cuffdiffcmd.cuffdiff.txt %]
-cuffdiffrun. echo 'test' > out
+cuffdiffrun. bash [% cuffdiffcmd.cuffdiff.txt %]
+cuffdiff.mem 48000
+cuffdiff.queue long
+
 #tar up the files so that we can analyse else where if need be
-#tardir. tar -zcvf [% tardir %]/cuffdiff.tar.gz --exclude='err' [% cuffdiffrun %]
-#tardir.output cuffdiff.tar.gz 
+tardir. tar -zcvf [% tardir %]/cuffdiff.tar.gz --exclude='err' [% cuffdiffrun %]
+tardir.output cuffdiff.tar.gz 
