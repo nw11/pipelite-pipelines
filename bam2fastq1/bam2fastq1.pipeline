@@ -1,1 +1,14 @@
-1. wc -l [% step0.file1 %] > [% step1.file1 %]
+# use bam2fastq
+# It's unlikely that we would need to do this for a sam file, but just in case we convert the sam to a bam if required
+sambam. perl -e 'if ( -B qq|[% step0.file1 %]| ){ system( qq|ln -s [% step0.file1 %] [% sambam.file1 %]|) }else{ system( qq| samtools view -bS [% step0.file1 %] > [% sambam.file1 %] |  )  }'
+
+bam2fastq. bam2fastq -o [% bam2fastq.file1 %]#.fastq [% sambam.file1 %]
+bam2fastq.output file1_1.fastq file1_2.fastq
+
+checkreadcounts. perl -e '$sf = `samtools flagstat [% sambam.file1 %] | egrep "read1|read2" | cut -f1 -d" "`;
+($a,$b) = split "\n", $sf;
+($wc1) = `wc -l [% bam2fastq.output1 %]` =~ /(^[0-9]+)/;
+($wc2) = `wc -l [% bam2fastq.output2 %]` =~ /(^[0-9]+)/;
+$read_counts = "bam reads: $a $b ; fastq reads: " .( $wc1/4 ) . " " . ( $wc2/4 ) . "\n";
+print STDERR "WARNING: FASTQ READ COUNTS ARE NOT CONCORDANT WITH SOURCE BAM FILE \n" unless ( ($a == $wc1/4) and ($b == $wc2/4) );
+print STDERR $read_counts, "\n";'
