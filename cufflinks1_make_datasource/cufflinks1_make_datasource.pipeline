@@ -20,4 +20,6 @@ $condstr = join ",", @cond;
 $filestr = join " ", @file; 
 my $mask_file_option =" -M [% input.mm10_rRNA_tRNA.gtf %]"; 
 print "cuffdiff", " -L $condstr", " $mask_file_option ", " [% input.genes.gtf %] ", " $filestr "; 
-}' [% sortandgroup.grouped.tsv %] > [% cuffdiffcmd.cuffdiff.txt %] 
+}' [% sortandgroup.grouped.tsv %] > [% cuffdiffcmd.cuffdiff.txt %]
+
+cuffdiffrun. bash [% cuffdiffcmd.cuffdiff.txt %] 
