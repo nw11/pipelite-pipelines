@@ -24,8 +24,8 @@ print "cuffdiff", " -L $condstr", " $mask_file_option ", " $output_dir_option ",
 }' [% sortandgroup.grouped.tsv %] > [% cuffdiffcmd.cuffdiff.txt %]
 
 cuffdiffrun. bash [% cuffdiffcmd.cuffdiff.txt %]
-cuffdiff.mem 48000
-cuffdiff.queue long
+cuffdiffrun.mem 48000
+cuffdiffrun.queue long
 
 #tar up the files so that we can analyse else where if need be
 tardir. tar -zcvf [% tardir %]/cuffdiff.tar.gz --exclude='err' [% cuffdiffrun %]
