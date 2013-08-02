@@ -20,7 +20,7 @@ $condstr = join ",", @cond;
 $filestr = join " ", @file; 
 my $mask_file_option =" -M [% input.mm10_rRNA_tRNA.gtf %]"; 
 my $output_dir_option = " --output-dir [% cuffdiffcmd %] ";
-print "cuffdiff", " -L $condstr", " $mask_file_option ", " $output_dir_option ", " [% input.genes.gtf %] ", " $filestr "; 
+print "cuffdiff", " -L $condstr", " $mask_file_option ", " $output_dir_option ", " [% input.mm10_ens.gtf %] ", " $filestr "; 
 }' [% sortandgroup.grouped.tsv %] > [% cuffdiffcmd.cuffdiff.txt %]
 
 cuffdiffrun. bash [% cuffdiffcmd.cuffdiff.txt %]
