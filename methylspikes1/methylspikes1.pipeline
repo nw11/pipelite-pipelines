@@ -5,6 +5,8 @@ BEGIN {
 @hc  = qw(30 55);
 @cpos  = map { $_ -1 } @c;
 @mcpos = map { $_ -1 } @mc;
+$chash{$_} = 0 for @cpos;
+$thash{$_} = 0 for @cpos;
 };
 @seq = split "", $_;
 print STDERR @seq,"\n";
