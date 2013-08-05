@@ -1,9 +1,9 @@
 # Convert the ensembl gtf into suitable gff
-convertensemblgtf. [% software.dexseq_prepare_annotation.py %]  [% input.ensembl.gtf %] [% convertensemblgtf.ensembl.gff %]
+convertensemblgtf. python [% software.dexseq_prepare_annotation.py %]  [% input.ensembl.gtf %] [% convertensemblgtf.ensembl.gff %]
 
 # Get counts
 # step0.paired must be of the form "--paired=yes" or an empty string - the default is "no"
 # step0.strand must be of the form e.g. "--stranded=no", "--stranded=reverse" or an empty string - the default is "--stranded=yes"
-exoncounts. [% software.dexseq_count.py %] [% step0.paired %] [% step0.stranded %] [% step0.minqual %] [% step0.sam %] [% exoncounts.exoncounts.tsv %]
+exoncounts. python [% software.dexseq_count.py %] [% step0.paired %] [% step0.stranded %] [% step0.minqual %] [% step0.sam %] [% exoncounts.exoncounts.tsv %]
 
 # Do exon analysis
