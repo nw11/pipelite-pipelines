@@ -4,6 +4,6 @@ convertensemblgtf. python [% software.dexseq_prepare_annotation.py %]  [% input.
 # Get counts
 # step0.paired must be of the form "--paired=yes" or an empty string - the default is "no"
 # step0.strand must be of the form e.g. "--stranded=no", "--stranded=reverse" or an empty string - the default is "--stranded=yes"
-exoncounts. python [% software.dexseq_count.py %] [% step0.paired %] [% step0.stranded %] [% step0.minqual %] [% step0.sam %] [% exoncounts.exoncounts.tsv %]
+exoncounts. python [% software.dexseq_count.py %] [% step0.paired %] [% step0.stranded %] [% step0.minqual %] [% convertensemblgtf.ensembl.gff %] [% step0.sam %] [% exoncounts.exoncounts.tsv %]
 
 # Do exon analysis
