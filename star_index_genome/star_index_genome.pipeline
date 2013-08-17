@@ -1,4 +1,4 @@
 #STAR
 # ****** you need to ensure that the a folder has been created as the star_index_location    ******##
-starindex. [% software.STAR %] --runMode genomeGenerate --genomeDir [% step0.star_index_location %] --sjdbGTFfile [% input.mm10_ens.gtf %] --runThreadN 4 --genomeFastaFiles [% step0.reference %]
+starindex. [% software.STAR %] --runMode genomeGenerate --genomeDir [% step0.star_index_location %] --sjdbGTFfile [% input.mm10_ens.gtf %] --runThreadN 4 --genomeFastaFiles [% step0.reference_file %]
 starindex.mem 32000
