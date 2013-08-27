@@ -1,0 +1,1 @@
+sortsam. [% software.picardsortsam %] INPUT=[% step0.file1 %] OUTPUT=[% sortsam.sorted.sam %] SORT_ORDER=[% step0.sortorder %] METRICS_FILE=[% sortsam.metrics.txt %]
