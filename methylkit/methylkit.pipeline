@@ -1,0 +1,5 @@
+# requires to be sorted first - note that in the discussion list they suggest this way of doing things
+# as they have foudn that picard will scramble sam tags.
+sortsam.  grep -v '^[[:space:]]*@' [% step0.samfile %] | sort -k3,3 -k4,4n  > [% sortsam.sorted.sam %]
+# calls the methylCall to produce files that methylkit can analyse
+methylcall. perl [% software.methCall.pl %] --read1 [% sortsam.sorted.sam %] --type paired_sam --mincov 5 --nolap --CpG [% methylcall.CpG.txt %] --CHH [% methylcall.CHH.txt %] --CHG [% methylcall.CHG.txt %]
