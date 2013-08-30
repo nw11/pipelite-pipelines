@@ -6,6 +6,6 @@ getcolumn. echo '[% step0.phenotype %]_[% step0.gender %]_[% step0.sample %]' > 
 getcolumn.after makerowdesc
 
 ## joins everything into a table
-maketable.once paste [% global.bismarksummary.txt %] [% jobs.getcolumn.column %]  > [% global.bismarktable.txt %]
+maketable.once paste [% global.rowdesc.txt %] [% jobs.getcolumn.column %]  > [% global.bismarktable.txt %]
 maketable.after getcolumn
 
