@@ -1,12 +1,24 @@
 mergebismarkcounts. cat [% step0.bedgraph_files %] | sort -k1,1 -k2,2n | perl -F"\t" -lane '
-BEGIN{ @lastrow; }{ 
-if ( $lastrow[0] . $lastrow[1] ne $F[0] . $F[1] ){ 
-print join "\t", @lastrow; 
+BEGIN{ @lastrow; }{
+if ( $lastrow[0] . $lastrow[1] ne $F[0] . $F[1] ){
+print join "\t", @lastrow unless @lastrow == 0;
 @lastrow = @F;
-}else{ 
-$lastrow[4] += $F[4]; 
-$lastrow[5] += $F[5]; 
-$lastrow[3] = 100 * ( $lastrow[4] / ($lastrow[4] + $lastrow[5]));  
-}  
+}else{
+$lastrow[4] += $F[4];
+$lastrow[5] += $F[5];
+$lastrow[3] = 100 * ( $lastrow[4] / ($lastrow[4] + $lastrow[5]));
+}END{print join "\t", @lastrow}
 }' > [% mergebismarkcounts.merged.bedgraph %]
- 
+
+coveragestats. awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %] | stats > [% coveragestats.stats.txt %]
+
+coveragehistlog.  awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %]  | histogram --bins 40 > [% coveragehistlog.histlog.txt %]
+coveragehistlinear.  awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %] | histogram --bins --linear 40 > [% coveragehistlinear.histlinear.txt %]
+coveragehistlogtwenty.  awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %]  | histogram --bins 20 > [% coveragehistlogtwenty.histlog.txt %]
+coveragehistlineartwenty.  awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %] | histogram --bins --linear 20 > [% coveragehistlineartwenty.histlinear.txt %]
+
+coveragecumulative. perl -F"\t" -lane 'BEGIN{ %hash = map { $_ => 0 } grep { $_ % 5 == 0 } 0 .. 1000 } { $s = $F[4] + $f[5]; map { $hash{$_}++ if $s >= $_  } keys %hash;    }END{ @sortedkeys = sort {$a<=>$b} keys %hash; print join "\t", @sortedkeys; print join "\t", map { $hash{$_} } @sortedkeys }' [% mergebismarkcounts.merged.bedgraph %] > [% coveragecumulative.covcumulative.txt %]
+
+methylationhistlinear. awk '{print $4}' [% mergebismarkcounts.merged.bedgraph %] | histogram --bins 15 --linear > [% methylationhistlinear.methhistlinear.txt %]
+
+methylationhistlog. awk '{print $4}' [% mergebismarkcounts.merged.bedgraph %] | histogram --bins 15 > [% methylationhistlog.methhistlog.txt %]
