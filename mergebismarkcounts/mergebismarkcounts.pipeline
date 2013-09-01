@@ -17,8 +17,10 @@ coveragehistlinear.  awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %
 coveragehistlogtwenty.  awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %]  | histogram --bins 20 > [% coveragehistlogtwenty.histlog.txt %]
 coveragehistlineartwenty.  awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %] | histogram --bins 20 --linear > [% coveragehistlineartwenty.histlinear.txt %]
 
-coveragecumulative. perl -F"\t" -lane 'BEGIN{ %hash = map { $_ => 0 } grep { $_ % 5 == 0 } 0 .. 1000 } { $s = $F[4] + $f[5]; map { $hash{$_}++ if $s >= $_  } keys %hash;    }END{ @sortedkeys = sort {$a<=>$b} keys %hash; print join "\t", @sortedkeys; print join "\t", map { $hash{$_} } @sortedkeys }' [% mergebismarkcounts.merged.bedgraph %] > [% coveragecumulative.covcumulative.txt %]
+coveragecumulative. perl -F"\t" -lane 'BEGIN{ %hash = map { $_ => 0 } grep { $_ % 5 == 0 } 0 .. 1000 } { $s = $F[4] + $f[5]; map { $hash{$_}++ if $s >= $_  } keys %hash;    }END{ @sortedkeys = sort {$a<=>$b} keys %hash; print join "\t", "desc", @sortedkeys; print join "\t", "[% step0.desc %]", map { $hash{$_} } @sortedkeys }' [% mergebismarkcounts.merged.bedgraph %] > [% coveragecumulative.covcumulative.txt %]
 
 methylationhistlinear. awk '{print $4}' [% mergebismarkcounts.merged.bedgraph %] | histogram --bins 15 --linear > [% methylationhistlinear.methhistlinear.txt %]
 
 methylationhistlog. awk '{print $4}' [% mergebismarkcounts.merged.bedgraph %] | histogram --bins 15 > [% methylationhistlog.methhistlog.txt %]
+
+
