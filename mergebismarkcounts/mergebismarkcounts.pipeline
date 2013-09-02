@@ -10,7 +10,7 @@ $lastrow[3] = 100 * ( $lastrow[4] / ($lastrow[4] + $lastrow[5]));
 }END{print join "\t", @lastrow}
 }' > [% mergebismarkcounts.merged.bedgraph %]
 
-coveragestats. awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %] | stats > [% coveragestats.stats.txt %]
+coveragestats. awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %] | stats | perl -F"\t+" -lane '{push @header, $F[0]; push @row, $F[1]; }END{print join "\t", "desc", @header; print join "\t",  "[% step0.desc %]",  @row}' > [% coveragestats.stats.txt %]
 
 coveragehistlog.  awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %]  | histogram --bins 40 > [% coveragehistlog.histlog.txt %]
 coveragehistlinear.  awk '{print $5+$6}' [% mergebismarkcounts.merged.bedgraph %] | histogram --bins 40 --linear > [% coveragehistlinear.histlinear.txt %]
