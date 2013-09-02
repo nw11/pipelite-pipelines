@@ -23,4 +23,4 @@ methylationhistlinear. awk '{print $4}' [% mergebismarkcounts.merged.bedgraph %]
 
 methylationhistlog. awk '{print $4}' [% mergebismarkcounts.merged.bedgraph %] | histogram --bins 15 > [% methylationhistlog.methhistlog.txt %]
 
-
+coveragestatsgather.once head -n1 [% coveragestats.stats.txt %] > [% global.coveragestats.txt %];  cat [% jobs.coveragestats.stats.txt %] | egrep -v 'desc' >> [% global.coveragestats.txt %]; 
