@@ -22,5 +22,3 @@ coveragecumulative. perl -F"\t" -lane 'BEGIN{ %hash = map { $_ => 0 } grep { $_ 
 methylationhistlinear. awk '{print $4}' [% mergebismarkcounts.merged.bedgraph %] | histogram --bins 15 --linear > [% methylationhistlinear.methhistlinear.txt %]
 
 methylationhistlog. awk '{print $4}' [% mergebismarkcounts.merged.bedgraph %] | histogram --bins 15 > [% methylationhistlog.methhistlog.txt %]
-
-coveragegatherstats.once cat [% jobs.coveragestats.stats.txt %] | egrep -v 'desc' > [% global.coveragestats.txt %];
