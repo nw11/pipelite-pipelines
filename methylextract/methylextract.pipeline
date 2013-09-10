@@ -1,6 +1,6 @@
 #run deduplicate.
 deduplicate. [% software.bismark_deduplicate %] --paired [% bismark.output1 %] > [% deduplicate.dedup.sam %]
-deduplicate.mem 32000
+deduplicate.mem 64000
 
 # step0.paired_or_single_end should be -p or -s
 # source ensures we have some perl modules required by methylationextractor
