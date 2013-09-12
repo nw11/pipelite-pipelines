@@ -8,7 +8,7 @@ deduplicate.mem 32000
 # step0.paired_or_single_end should be -p or -s
 # source ensures we have some perl modules required by methylationextractor
 # *** we need to add in the removal of 1st few bases for read_2 see the M-bias plots *** 
-methylationextractor. source ~/bin/localperl; perl [% software.bismark_methylation_extractor %] [% step0.paired_or_single_end %] --no_overlaps --ignore 3 --ignore_r2 3 --report --bedGraph --cytosine_report --output [% methylationextractor %] --genome_folder [% step0.bismark_genome_dir %] [% deduplicate.bismark_dedup.sam %] > [% methylationextractor.out %]
+methylationextractor. source ~/bin/localperl; perl [% software.bismark_methylation_extractor %] [% step0.paired_or_single_end %] --no_overlap --ignore 3 --ignore_r2 3 --report --bedGraph --cytosine_report --output [% methylationextractor %] --genome_folder [% step0.bismark_genome_dir %] [% deduplicate.bismark_dedup.sam %] > [% methylationextractor.out %]
 methylationextractor.output bismark_dedup.bedGraph
 methylationextractor.mem 48000
 methylationextractor.queue long
