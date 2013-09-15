@@ -1,4 +1,9 @@
 # values to the opts (e.g. bismark_opts) must contain a starting space
-bsexpress. bsExpress --in [% step0.fastq1 %] [% step0.fastq2 %] --outdir [% bsexpress %] --prefix wgbs --ref [% step0.bismark_ref_path %] --mark_duplicates --verbose --skip_shorten --bismark_opts " [% step0.bismark_opts %]" --bismark_path [% software.bismark_dir %] --clipoverlap_path [% software.clip_overlap_dir %] --trim_galore_path [% software.trim_galore_dir %] > [% bsexpress.out %]
+#bsexpress. bsExpress --in [% step0.fastq1 %] [% step0.fastq2 %] --outdir [% bsexpress %] --prefix wgbs --ref [% step0.bismark_ref_path %] --mark_duplicates --verbose --skip_report --skip_shorten --bismark_opts " [% step0.bismark_opts %]" --bismark_path [% software.bismark_dir %] --clipoverlap_path [% software.clip_overlap_dir %] --trim_galore_path [% software.trim_galore_dir %] > [% bsexpress.out %]
+#bsexpress.mem 64000
+#bsexpress.queue long 
+#
+# values to the opts (e.g. bismark_opts) must contain a starting space
+bsexpress. bsExpress --in [% step0.fastq1 %] [% step0.fastq2 %] --outdir [% bsexpress %] --prefix wgbs --ref [% step0.bismark_ref_path %] --skip_report --skip_trim --skip_fastqc --mark_duplicates --verbose --skip_shorten --bismark_opts " [% step0.bismark_opts %]" --bismark_path [% software.bismark_dir %] --clipoverlap_path [% software.clip_overlap_dir %] --trim_galore_path [% software.trim_galore_dir %] > [% bsexpress.out %]
 bsexpress.mem 64000
-bsexpress.queue long 
+bsexpress.queue long
