@@ -11,17 +11,20 @@ bismark.output file1_1_val_1.fq_bismark_pe.sam file1_1_val_1.fq_bismark_PE_repor
 bismark.queue long
 
 #run deduplicate.
-deduplicate. [% software.bismark_deduplicate %] --paired [% bismark.output1 %] > [% deduplicate.file2.sam %]
+#This bismark program will output in the same directory as the sam file - no option to do anything
+#else. So there is a modified version of the script in software that allows specification of the output directories for the report and the sam file
+deduplicate. [% software.deduplicate_bismark_alignment_output.pl %] --output_file [% deduplicate.bismark_dedup.sam %] --output_report_file [% deduplicate.dedup_report.txt %] --paired [% bismark.output1 %] > [% deduplicate.out %]
 deduplicate.mem 32000
+
 
 # step0.paired_or_single_end should be -p or -s
 # source ensures we have some perl modules required by methylationextractor
 # *** we need to add in the removal of 1st few bases for read_2 see the M-bias plots ***
 # we use --no_overlap - about 70% of our reads overlap. 
-methylationextractor. source ~/bin/localperl; perl [% software.bismark_methylation_extractor %] [% step0.paired_or_single_end %] --ignore 2 --ignore_r2 2 --no_overlap --report --bedGraph --cytosine_report --output [% methylationextractor %] --genome_folder [% step0.bismark_genome_dir %] [% deduplicate.file2.sam %] > [% methylationextractor.out %]
-methylationextractor.output file2.CpG_report.txt file2.bedGraph CHG_OB_file2.txt CHG_OT_file2.txt CHH_OB_file2.txt CHH_OT_file2.txt  CpG_OB_file2.txt CpG_OT_file2.txt
+methylationextractor. source ~/bin/localperl; perl [% software.bismark_methylation_extractor %] [% step0.paired_or_single_end %] --zero_based --ignore 2 --ignore_r2 2 --no_overlap --report --gzip --bedGraph --cytosine_report --output [% methylationextractor %] --genome_folder [% step0.bismark_genome_dir %] [% deduplicate.bismark_dedup.sam %] > [% methylationextractor.out %]
+methylationextractor.output bismark_dedup.CpG_report.txt bismark_dedup.bedGraph
 methylationextractor.mem 48000
 methylationextractor.queue long
 
 # zip up the files produced
-gzip. gzip [% methylationextractor.output1 %]; gzip [% methylationextractor.output2 %]; gzip [% methylationextractor.output3 %]; gzip [% methylationextractor.output4 %]; gzip [% methylationextractor.output5 %]; gzip [% methylationextractor.output6 %]; gzip [% methylationextractor.output7 %]; gzip [% methylationextractor.output8 %]; >> [% gzip.out %]
+gzip. gzip [% methylationextractor.output1 %]; gzip [% methylationextractor.output2 %]; >> [% gzip.out %]
