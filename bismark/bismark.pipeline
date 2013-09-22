@@ -11,7 +11,7 @@ bismark.output file1_1_val_1.fq_bismark_pe.sam file1_1_val_1.fq_bismark_PE_repor
 bismark.queue long
 
 #run deduplicate.
-deduplicate. [% software.bismark_deduplicate %] --paired [% bismark.output1 %] > [% deduplicate.dedup.sam %]
+deduplicate. [% software.bismark_deduplicate %] --paired [% bismark.output1 %] > [% deduplicate.file2.sam %]
 deduplicate.mem 32000
 
 # step0.paired_or_single_end should be -p or -s
@@ -19,6 +19,9 @@ deduplicate.mem 32000
 # *** we need to add in the removal of 1st few bases for read_2 see the M-bias plots ***
 # we use --no_overlap - about 70% of our reads overlap. 
 methylationextractor. source ~/bin/localperl; perl [% software.bismark_methylation_extractor %] [% step0.paired_or_single_end %] --ignore 2 --ignore_r2 2 --no_overlap --report --bedGraph --cytosine_report --output [% methylationextractor %] --genome_folder [% step0.bismark_genome_dir %] [% deduplicate.dedup.sam %] > [% methylationextractor.out %]
-methylationextractor.output file2.bedGraph
+methylationextractor.output file2.CpG_report.txt file2.bedGraph CHG_OB_file2.txt CHG_OT_file2.txt CHH_OB_file2.txt CHH_OT_file2.txt  CpG_OB_file2.txt CpG_OT_file2.txt
 methylationextractor.mem 48000
 methylationextractor.queue long
+
+# zip up the files produced
+gzip. gzip [% methylationextractor.output1 %]; gzip [% methylationextractor.output2 %]; gzip [% methylationextractor.output3 %]; gzip [% methylationextractor.output4 %]; gzip [% methylationextractor.output5 %]; gzip [% methylationextractor.output6 %]; gzip [% methylationextractor.output7 %]; gzip [% methylationextractor.output8 %]; >> [% gzip.out %]
