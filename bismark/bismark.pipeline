@@ -13,7 +13,7 @@ bismark.queue long
 #run deduplicate.
 #This bismark program will output in the same directory as the sam file - no option to do anything
 #else. So there is a modified version of the script in software that allows specification of the output directories for the report and the sam file
-deduplicate. [% software.deduplicate_bismark_alignment_output.pl %] --output_file [% deduplicate.bismark_dedup.sam %] --output_report_file [% deduplicate.dedup_report.txt %] --paired [% bismark.output1 %] > [% deduplicate.out %]
+deduplicate. perl [% software.deduplicate_bismark_alignment_output.pl %] --output_file [% deduplicate.bismark_dedup.sam %] --output_report_file [% deduplicate.dedup_report.txt %] --paired [% bismark.output1 %] > [% deduplicate.out %]
 deduplicate.mem 32000
 
 
