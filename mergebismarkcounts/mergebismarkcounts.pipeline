@@ -1,4 +1,5 @@
-mergebismarkcounts. cat [% step0.bedgraph_files %] | sort -k1,1 -k2,2n | perl -F"\t" -lane '
+# if your files are gzipped use zcat
+mergebismarkcounts. zcat [% step0.bedgraph_files %] | sort -k1,1 -k2,2n | perl -F"\t" -lane '
 BEGIN{ @lastrow; }{
 if ( $lastrow[0] . $lastrow[1] ne $F[0] . $F[1] ){
 print join "\t", @lastrow unless @lastrow == 0;
