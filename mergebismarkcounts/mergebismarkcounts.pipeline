@@ -1,5 +1,5 @@
 # if your files are gzipped use zcat
-mergebismarkcounts. zcat [% step0.bedgraph_files %] | sort -k1,1 -k2,2n | perl -M Math::Round=round -F"\t" -lane '
+mergebismarkcounts. zcat [% step0.bedgraph_files %] | sort -k1,1 -k2,2n | perl -MMath::Round=round -F"\t" -lane '
 BEGIN{ @lastrow; }{
 if ( $lastrow[0] . $lastrow[1] ne $F[0] . $F[1] ){
 print join "\t", @lastrow unless @lastrow == 0;
