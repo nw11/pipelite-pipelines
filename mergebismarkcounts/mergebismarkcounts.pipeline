@@ -9,17 +9,18 @@ $lastrow[4] += $F[4];
 $lastrow[5] += $F[5];
 $lastrow[3] = round( 100 * ( $lastrow[4] / ($lastrow[4] + $lastrow[5])));
 }END{print join "\t", @lastrow}
-}' | gzip > [% mergebismarkcounts.merged.bedgraph %]
+}' | gzip > [% mergebismarkcounts.merged_bedgraph.gz %]
+mergebismarkcounts.mem 16000
 
-coveragestats. zcat [% mergebismarkcounts.merged.bedgraph %] | awk '{print $5+$6}' | stats | perl -F"\t+" -lane '{push @header, $F[0]; push @row, $F[1]; }END{print join "\t", "desc", @header; print join "\t",  "[% step0.desc %]",  @row}' > [% coveragestats.stats.txt %]
+coveragestats. zcat [% mergebismarkcounts.merged_bedgraph.gz %] | awk '{print $5+$6}' | stats | perl -F"\t+" -lane '{push @header, $F[0]; push @row, $F[1]; }END{print join "\t", "desc", @header; print join "\t",  "[% step0.desc %]",  @row}' > [% coveragestats.stats.txt %]
 
-coveragehistlog. zcat [% mergebismarkcounts.merged.bedgraph %] | awk '{print $5+$6}' | histogram --bins 40 > [% coveragehistlog.histlog.txt %]
-coveragehistlinear. zcat [% mergebismarkcounts.merged.bedgraph %] | awk '{print $5+$6}' | histogram --bins 40 --linear > [% coveragehistlinear.histlinear.txt %]
-coveragehistlogtwenty. zcat [% mergebismarkcounts.merged.bedgraph %] | awk '{print $5+$6}' | histogram --bins 20 > [% coveragehistlogtwenty.histlog.txt %]
-coveragehistlineartwenty. zcat [% mergebismarkcounts.merged.bedgraph %]  awk '{print $5+$6}' | histogram --bins 20 --linear > [% coveragehistlineartwenty.histlinear.txt %]
+coveragehistlog. zcat [% mergebismarkcounts.merged_bedgraph.gz %] | awk '{print $5+$6}' | histogram --bins 40 > [% coveragehistlog.histlog.txt %]
+coveragehistlinear. zcat [% mergebismarkcounts.merged_bedgraph.gz %] | awk '{print $5+$6}' | histogram --bins 40 --linear > [% coveragehistlinear.histlinear.txt %]
+coveragehistlogtwenty. zcat [% mergebismarkcounts.merged_bedgraph.gz %] | awk '{print $5+$6}' | histogram --bins 20 > [% coveragehistlogtwenty.histlog.txt %]
+coveragehistlineartwenty. zcat [% mergebismarkcounts.merged_bedgraph.gz %]  awk '{print $5+$6}' | histogram --bins 20 --linear > [% coveragehistlineartwenty.histlinear.txt %]
 
-coveragecumulative. zcat [% mergebismarkcounts.merged.bedgraph %] | perl -F"\t" -lane 'BEGIN{ %hash = map { $_ => 0 } grep { $_ % 5 == 0 } 0 .. 1000 } { $s = $F[4] + $f[5]; map { $hash{$_}++ if $s >= $_  } keys %hash;    }END{ @sortedkeys = sort {$a<=>$b} keys %hash; print join "\t", "desc", @sortedkeys; print join "\t", "[% step0.desc %]", map { $hash{$_} } @sortedkeys }' > [% coveragecumulative.covcumulative.txt %]
+coveragecumulative. zcat [% mergebismarkcounts.merged_bedgraph.gz %] | perl -F"\t" -lane 'BEGIN{ %hash = map { $_ => 0 } grep { $_ % 5 == 0 } 0 .. 1000 } { $s = $F[4] + $f[5]; map { $hash{$_}++ if $s >= $_  } keys %hash;    }END{ @sortedkeys = sort {$a<=>$b} keys %hash; print join "\t", "desc", @sortedkeys; print join "\t", "[% step0.desc %]", map { $hash{$_} } @sortedkeys }' > [% coveragecumulative.covcumulative.txt %]
 
-methylationhistlinear. zcat [% mergebismarkcounts.merged.bedgraph %] | awk '{print $4}' | histogram --bins 15 --linear > [% methylationhistlinear.methhistlinear.txt %]
+methylationhistlinear. zcat [% mergebismarkcounts.merged_bedgraph.gz %] | awk '{print $4}' | histogram --bins 15 --linear > [% methylationhistlinear.methhistlinear.txt %]
 
-methylationhistlog. zcat [% mergebismarkcounts.merged.bedgraph %] | awk '{print $4}' | histogram --bins 15 > [% methylationhistlog.methhistlog.txt %]
+methylationhistlog. zcat [% mergebismarkcounts.merged_bedgraph.gz %] | awk '{print $4}' | histogram --bins 15 > [% methylationhistlog.methhistlog.txt %]
